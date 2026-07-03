@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Email Management — Portfolio Sample | Fida UrSolution</title>
+<style>
+  :root{
+    --navy:#0A2342; --navy-light:#123a63; --teal:#008B6B; --teal-light:#4FBFA0;
+    --teal-pale:#E4F3EE; --cream:#F8F5EE; --slate:#5B6472; --ink:#1B2430;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Arial,'Liberation Sans',Helvetica,sans-serif;background:var(--cream);color:var(--ink);}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 60px;}
+
+  .header{
+    background:linear-gradient(135deg,var(--navy) 0%, var(--navy-light) 100%);
+    color:#fff;border-radius:12px;padding:28px 32px;margin-bottom:22px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
+  }
+  .header .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--teal-light);font-weight:700;margin-bottom:6px;}
+  .header h1{margin:0;font-size:22px;font-family:Georgia,'Liberation Serif',serif;}
+  .header p{margin:8px 0 0;font-size:13px;color:#C7D3E0;max-width:520px;}
+  .tag{background:rgba(255,255,255,.12);color:var(--teal-light);font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:7px 14px;border-radius:20px;white-space:nowrap;border:1px solid rgba(79,191,160,.4);}
+
+  .email-client{background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(10,35,66,.1);overflow:hidden;margin-bottom:24px;}
+  .email-toolbar{background:#F0EEE7;padding:10px 20px;display:flex;gap:8px;align-items:center;border-bottom:1px solid #E4E1D8;}
+  .email-toolbar .dot{width:9px;height:9px;border-radius:50%;}
+  .email-meta{padding:22px 28px 18px;border-bottom:1px solid #EFEDE6;}
+  .email-meta .subject{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:14px;}
+  .meta-row{display:flex;font-size:12.5px;color:var(--slate);margin-bottom:4px;}
+  .meta-row .label{width:52px;flex-shrink:0;color:#9AA3AE;}
+  .meta-row .value{color:var(--ink);}
+  .avatar{
+    width:34px;height:34px;border-radius:50%;background:var(--teal);color:#fff;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
+    margin-right:10px;vertical-align:middle;
+  }
+  .email-body{padding:26px 28px 30px;font-size:14px;line-height:1.75;color:var(--ink);}
+  .email-body p{margin:0 0 16px;}
+  .email-body ul{margin:0 0 16px;padding-left:22px;}
+  .email-body li{margin-bottom:8px;}
+  .email-body .sign{margin-top:6px;}
+  .email-body .sign b{color:var(--navy);}
+  .email-body .sign .role{color:var(--slate);font-size:12.5px;}
+
+  .why-it-works{background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(10,35,66,.06);padding:24px 28px;margin-bottom:20px;}
+  .why-it-works h2{font-size:15px;color:var(--navy);margin:0 0 14px;font-family:Georgia,'Liberation Serif',serif;}
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .why-item{display:flex;gap:10px;align-items:flex-start;font-size:12.8px;color:var(--ink);line-height:1.55;}
+  .why-item .chip{
+    width:22px;height:22px;border-radius:6px;background:var(--teal-pale);color:var(--teal);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;
+  }
+
+  .footer-note{
+    background:var(--navy);color:#fff;border-radius:12px;padding:20px 28px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .footer-note .msg h3{margin:0 0 4px;font-size:14px;font-family:Georgia,'Liberation Serif',serif;}
+  .footer-note .msg p{margin:0;font-size:12px;color:#C7D3E0;}
+  .footer-note .contact{font-size:11.5px;text-align:right;line-height:1.7;color:#C7D3E0;}
+  .footer-note .contact b{color:var(--teal-light);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div>
+      <div class="eyebrow">Email Management</div>
+      <h1>Professional Email Reply — Client Communication Sample</h1>
+      <p>Drafting clear, empathetic, and action-oriented email replies on behalf of founders and their teams.</p>
+    </div>
+    <span class="tag">Portfolio Sample — Training Task</span>
+  </div>
+
+  <div class="email-client">
+    <div class="email-toolbar">
+      <span class="dot" style="background:#ED6A5E;"></span>
+      <span class="dot" style="background:#F4BF4F;"></span>
+      <span class="dot" style="background:#61C454;"></span>
+    </div>
+    <div class="email-meta">
+      <div class="subject">Update: Studio Contract &amp; New Studio Option | SG House</div>
+      <div class="meta-row"><span class="label">From</span><span class="value"><span class="avatar">AA</span>Ahmad Abulfida — VA to Alex He, Founder of SG House</span></div>
+      <div class="meta-row"><span class="label">To</span><span class="value">Mr. Smith</span></div>
+    </div>
+    <div class="email-body">
+      <p>Dear Mr. Smith,</p>
+      <p>Thank you for reaching out. On behalf of Alex He, I'm happy to assist you with your contract details and future housing options.</p>
+      <p>I am very sorry to hear that your current housemate situation hasn't been ideal, as we always want your home to be a comfortable and peaceful space for you.</p>
+      <p>Here is a quick summary of your current status and a new option tailored to your preferences:</p>
+      <ul>
+        <li><b>Current Contract:</b> Ends on <b>June 30, 2026</b> (Current rent: 3,500 SGD/month).</li>
+        <li><b>New Studio Option:</b> To ensure a better living environment, we have a newly vacant studio <b>near the university</b> available for <b>3,700 SGD/month</b>. It offers more privacy and a much shorter commute for you.</li>
+      </ul>
+      <p><b>Next Steps:</b> The open house is happening this week until <b>June 25, 2026</b>. Would you prefer an <b>in-person viewing</b> or a <b>virtual tour</b>?</p>
+      <p>Please reply with your preference and availability, and I will gladly book a slot for you.</p>
+      <p class="sign">Best regards,<br><b>Ahmad Abulfida</b><br><span class="role">VA to Alex He, Founder of SG House</span></p>
+    </div>
+  </div>
+
+  <div class="why-it-works">
+    <h2>Why This Reply Works</h2>
+    <div class="why-grid">
+      <div class="why-item"><span class="chip">✓</span>Acknowledges the client's concern with genuine empathy before moving to solutions.</div>
+      <div class="why-item"><span class="chip">✓</span>Summarizes account details clearly so the client doesn't have to search for facts.</div>
+      <div class="why-item"><span class="chip">✓</span>Presents the new option with a clear benefit (privacy, shorter commute), not just a price.</div>
+      <div class="why-item"><span class="chip">✓</span>Ends with a specific, easy-to-answer question that moves the conversation forward.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <div class="msg">
+      <h3>Need your inbox handled like this?</h3>
+      <p>I manage email replies, follow-ups, and client communication so nothing falls through the cracks.</p>
+    </div>
+    <div class="contact">
+      <div><b>Instagram</b> @fida_ursolution</div>
+      <div><b>LinkedIn</b> linkedin.com/in/fida-vabooks</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
