@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fida UrSolution — Project Management Services</title>
+<style>
+  @page { size: A4; margin: 0; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: Arial, 'Liberation Sans', Helvetica, sans-serif;
+    color:#1B2430;
+    background:#fff;
+  }
+  :root{
+    --navy:#0A2342;
+    --navy-light:#123a63;
+    --teal:#008B6B;
+    --teal-light:#4FBFA0;
+    --teal-pale:#E4F3EE;
+    --cream:#F8F5EE;
+    --slate:#5B6472;
+    --gold:#B98B2E;
+  }
+  .page{
+    width:210mm;height:297mm;
+    position:relative;
+    overflow:hidden;
+    page-break-after:always;
+  }
+  .page:last-child{page-break-after:auto;}
+
+  /* ============ PAGE 1 ============ */
+  #p1{background:var(--cream);}
+  .p1-top{
+    background:linear-gradient(135deg,var(--navy) 0%, var(--navy-light) 100%);
+    color:#fff;
+    padding:15mm 16mm 12mm;
+  }
+  .brandmark{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-light);font-weight:700;}
+  .p1-top h1{
+    font-family:Georgia,'Liberation Serif',serif;
+    font-size:32px;line-height:1.15;margin:10px 0 8px;font-weight:700;
+  }
+  .p1-top p.lede{font-size:13px;color:#CBD6E4;max-width:135mm;line-height:1.55;margin:0;}
+
+  .section{padding:8mm 16mm 0;}
+  .section h2{
+    font-family:Georgia,'Liberation Serif',serif;
+    font-size:16px;color:var(--navy);margin:0 0 3mm;
+    border-bottom:2px solid var(--teal-pale);padding-bottom:2mm;
+  }
+
+  .services{display:grid;grid-template-columns:1fr 1fr;gap:4mm 6mm;margin-top:4mm;}
+  .svc{background:#fff;border-radius:6px;padding:5mm 6mm;box-shadow:0 2px 6px rgba(10,35,66,.06);border-left:3px solid var(--teal);}
+  .svc .icon{width:26px;height:26px;margin-bottom:3mm;}
+  .svc h3{font-size:12.5px;margin:0 0 2mm;color:var(--navy);}
+  .svc p{font-size:10.5px;color:var(--slate);line-height:1.5;margin:0;}
+
+  .steps{display:flex;gap:5mm;margin-top:4mm;}
+  .step{flex:1;position:relative;}
+  .step .num{
+    font-family:Georgia,'Liberation Serif',serif;
+    font-size:22px;color:var(--teal-light);font-weight:700;opacity:.55;
+  }
+  .step h3{font-size:11.5px;color:var(--navy);margin:1mm 0 1.5mm;}
+  .step p{font-size:9.8px;color:var(--slate);line-height:1.5;margin:0;}
+  .step:not(:last-child)::after{
+    content:'';position:absolute;top:9px;right:-2.7mm;width:6px;height:6px;
+    border-top:2px solid var(--teal-light);border-right:2px solid var(--teal-light);
+    transform:rotate(45deg);
+  }
+
+  .who{margin-top:4mm;display:flex;flex-direction:column;gap:2.5mm;}
+  .who .item{display:flex;gap:3mm;align-items:flex-start;font-size:11px;color:var(--ink);}
+  .who .bullet{width:7px;height:7px;border-radius:50%;background:var(--teal);margin-top:4px;flex-shrink:0;}
+
+  .p1-footer{
+    position:absolute;bottom:10mm;left:16mm;right:16mm;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:9.5px;color:var(--slate);border-top:1px solid #E0DDD3;padding-top:3mm;
+  }
+
+  /* ============ PAGE 2 ============ */
+  #p2{background:#fff;}
+  .p2-top{padding:14mm 16mm 0;display:flex;justify-content:space-between;align-items:flex-start;}
+  .tag{
+    background:var(--teal-pale);color:var(--teal);font-size:8.5px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap;
+  }
+  .p2-top h1{
+    font-family:Georgia,'Liberation Serif',serif;
+    font-size:24px;color:var(--navy);margin:0 0 2mm;
+  }
+  .p2-byline{font-size:10.5px;color:var(--slate);margin:0;}
+  .p2-brief{
+    margin:6mm 16mm 0;font-size:11px;line-height:1.65;color:var(--ink);
+    background:var(--teal-pale);border-radius:6px;padding:5mm 6mm;
+  }
+
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:3.5mm;margin:6mm 16mm 0;}
+  .metric{background:var(--cream);border-radius:6px;padding:4.5mm 4mm;text-align:center;border-top:3px solid var(--teal);}
+  .metric .v{font-family:Georgia,'Liberation Serif',serif;font-size:18px;color:var(--navy);font-weight:700;}
+  .metric .l{font-size:8.3px;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin-top:1mm;}
+
+  .timeline-strip{margin:6mm 16mm 0;}
+  .timeline-strip h2{font-size:12.5px;color:var(--navy);margin:0 0 3mm;font-family:Georgia,'Liberation Serif',serif;}
+  .strip-track{display:flex;height:9mm;border-radius:5px;overflow:hidden;}
+  .strip-track .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:7.6px;font-weight:700;}
+  .strip-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--slate);margin-top:1.5mm;}
+
+  .two-col{display:grid;grid-template-columns:1.05fr 0.95fr;gap:6mm;margin:6mm 16mm 0;}
+  .deliv h2, .out h2{font-size:12.5px;color:var(--navy);margin:0 0 3mm;font-family:Georgia,'Liberation Serif',serif;}
+  .deliv ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:2.3mm;}
+  .deliv li{font-size:10.2px;color:var(--ink);line-height:1.5;padding-left:5mm;position:relative;}
+  .deliv li::before{content:'✓';position:absolute;left:0;color:var(--teal);font-weight:700;}
+  .out p{font-size:10.2px;color:var(--ink);line-height:1.6;margin:0 0 3mm;}
+
+  .cta{
+    position:absolute;bottom:12mm;left:16mm;right:16mm;
+    background:linear-gradient(135deg,var(--navy) 0%, var(--navy-light) 100%);
+    border-radius:8px;color:#fff;padding:6mm 8mm;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .cta .msg h3{margin:0 0 1.5mm;font-size:13px;font-family:Georgia,'Liberation Serif',serif;}
+  .cta .msg p{margin:0;font-size:9.5px;color:#C7D3E0;}
+  .cta .contact{text-align:right;font-size:10px;line-height:1.7;}
+  .cta .contact b{color:var(--teal-light);}
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="page" id="p1">
+  <div class="p1-top">
+    <div class="brandmark">Fida UrSolution — Virtual Assistant Services</div>
+    <h1>Project Management,<br>Done For You</h1>
+    <p class="lede">From the first project charter to the closing report, I plan, coordinate, and track your
+    next launch, event, or client initiative — so you can focus on the client, not the checklist.</p>
+  </div>
+
+  <div class="section">
+    <h2>What My Project Management Service Includes</h2>
+    <div class="services">
+      <div class="svc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#008B6B" stroke-width="1.6"/><path d="M7 9h10M7 13h7M7 17h4" stroke="#008B6B" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Project Charters</h3>
+        <p>Objectives, scope, deliverables and stakeholders defined clearly from day one.</p>
+      </div>
+      <div class="svc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#008B6B" stroke-width="1.6"/><path d="M3 9h18M8 3v3M16 3v3" stroke="#008B6B" stroke-width="1.6" stroke-linecap="round"/><rect x="6.5" y="12" width="4" height="4" fill="#008B6B"/></svg>
+        <h3>Timeline &amp; Gantt Planning</h3>
+        <p>Milestone-based schedules with clear task ownership and dependencies.</p>
+      </div>
+      <div class="svc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="6" width="19" height="13" rx="2" stroke="#008B6B" stroke-width="1.6"/><path d="M2.5 10h19" stroke="#008B6B" stroke-width="1.6"/><circle cx="17" cy="14.2" r="1.6" fill="#008B6B"/></svg>
+        <h3>Budget Planning &amp; Tracking</h3>
+        <p>Income and expense breakdowns, contingency reserves, and real-time balance tracking.</p>
+      </div>
+      <div class="svc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="8.5" cy="8" r="2.6" stroke="#008B6B" stroke-width="1.6"/><circle cx="16" cy="9" r="2.1" stroke="#008B6B" stroke-width="1.6"/><path d="M3 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5M14.5 19c0-2.2 1.6-4 4-4s4 1.8 4 4" stroke="#008B6B" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Vendor &amp; Team Coordination</h3>
+        <p>Task assignments, follow-ups, and status tracking across every workstream.</p>
+      </div>
+      <div class="svc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 3.5v5.2c0 5-3.4 7.9-8 9.3-4.6-1.4-8-4.3-8-9.3V6.5L12 3z" stroke="#008B6B" stroke-width="1.6"/><path d="M9 12l2.2 2.2L15.5 9.5" stroke="#008B6B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Risk Management</h3>
+        <p>Risks identified early, each with a practical, written mitigation plan attached.</p>
+      </div>
+      <div class="svc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h16" stroke="#008B6B" stroke-width="1.6" stroke-linecap="round"/><rect x="7" y="12" width="2.6" height="7" fill="#008B6B"/><rect x="11.7" y="8" width="2.6" height="11" fill="#4FBFA0"/><rect x="16.4" y="4" width="2.6" height="15" fill="#008B6B"/></svg>
+        <h3>Progress Reporting</h3>
+        <p>Regular, clear updates so every stakeholder always knows where things stand.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How I Work</h2>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Discovery &amp; Charter</h3><p>Understand your goals and define scope, deliverables, stakeholders and risks.</p></div>
+      <div class="step"><div class="num">02</div><h3>Timeline &amp; Budget Build</h3><p>Build the Gantt chart and budget so every task has a clear owner and date.</p></div>
+      <div class="step"><div class="num">03</div><h3>Coordination &amp; Execution</h3><p>Track tasks, follow up with vendors, and keep the project moving on schedule.</p></div>
+      <div class="step"><div class="num">04</div><h3>Wrap-up &amp; Reporting</h3><p>Close the loop with a completion report and takeaways for next time.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Who This Is For</h2>
+    <div class="who">
+      <div class="item"><span class="bullet"></span>Coaches &amp; consultants launching client events, workshops or programs.</div>
+      <div class="item"><span class="bullet"></span>Realtors &amp; small business owners hosting VIP client experiences.</div>
+      <div class="item"><span class="bullet"></span>Founders who need a dedicated project lead without hiring full-time.</div>
+    </div>
+  </div>
+
+  <div class="p1-footer">
+    <span>Fida UrSolution — Project Management &amp; Virtual Assistant Services</span>
+    <span>1</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 2 ============ -->
+<div class="page" id="p2">
+  <div class="p2-top">
+    <div>
+      <h1>Case Study: Women's Day<br>VIP Celebration</h1>
+      <p class="p2-byline">Client: Realtor (Realty Practice) &nbsp;•&nbsp; Role: Project Manager &amp; Virtual Assistant &nbsp;•&nbsp; Timeline: 8 weeks</p>
+    </div>
+    <span class="tag">Portfolio Sample — Training Simulation</span>
+  </div>
+
+  <div class="p2-brief">
+    A realtor client wanted to celebrate Women's Day with 30 VIP clients in Jakarta to deepen relationships and
+    reinforce brand loyalty. I built the project charter, an 8-week Gantt timeline, and a full event budget, then
+    coordinated six workstreams — venue, catering, invitations, guest speakers, activities and gift bags — from
+    kickoff through to the closing report.
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="v">30</div><div class="l">VIP Guests</div></div>
+    <div class="metric"><div class="v">8 Weeks</div><div class="l">Timeline</div></div>
+    <div class="metric"><div class="v">Rp 175M</div><div class="l">Budget Managed</div></div>
+    <div class="metric"><div class="v">19</div><div class="l">Tasks Coordinated</div></div>
+    <div class="metric"><div class="v">100%</div><div class="l">Milestones On Track</div></div>
+    <div class="metric"><div class="v">Rp 0</div><div class="l">Budget Variance</div></div>
+  </div>
+
+  <div class="timeline-strip">
+    <h2>Project Timeline at a Glance</h2>
+    <div class="strip-track">
+      <div class="seg" style="flex:3;background:#008B6B;">Venue</div>
+      <div class="seg" style="flex:3;background:#0A2342;">Catering</div>
+      <div class="seg" style="flex:3;background:#4FBFA0;">Invitations</div>
+      <div class="seg" style="flex:2.5;background:#2E5C8A;">Speakers</div>
+      <div class="seg" style="flex:2;background:#C0533E;">Activities</div>
+      <div class="seg" style="flex:2;background:#8C6D1F;">Gift Bags</div>
+      <div class="seg" style="flex:2.5;background:#4B4E8A;">Closing</div>
+    </div>
+    <div class="strip-labels"><span>6 Jul 2026 — kickoff</span><span>4 Sep 2026 — event day</span><span>8 Sep 2026 — wrap-up</span></div>
+  </div>
+
+  <div class="two-col">
+    <div class="deliv">
+      <h2>Deliverables</h2>
+      <ul>
+        <li>Venue selection, booking and setup for 30 VIP guests</li>
+        <li>Catering, invitations and RSVP / guest list management</li>
+        <li>Guest speaker program and VIP activities (wellness session, entertainment, decor &amp; styling)</li>
+        <li>Gift bags for all attendees, plus event-day photography and documentation</li>
+      </ul>
+    </div>
+    <div class="out">
+      <h2>How It Was Managed</h2>
+      <p>A project charter set the objective, scope and risk register before any vendor was booked.</p>
+      <p>A milestone-based Gantt chart gave every one of the 19 tasks a named owner and a date, tracked weekly against plan.</p>
+      <p>A linked budget kept a Rp 10M contingency reserve in view at all times, closing the project at zero variance.</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="msg">
+      <h3>Planning something similar?</h3>
+      <p>Let's build the charter, timeline and budget for your next event or launch.</p>
+    </div>
+    <div class="contact">
+      <div><b>Instagram</b> @fida_ursolution</div>
+      <div><b>LinkedIn</b> linkedin.com/in/fida-vabooks</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
