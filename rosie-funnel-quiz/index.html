@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growth with Rosie — Soul-Led Business Audit</title>
+  <meta name="description" content="A free 2-minute audit to uncover the #1 hidden block holding your soul-led business back — and how to fix it." />
+
+  <!-- Fonts: editorial serif + clean sans, matching the Stitch design -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind (Play CDN — fine for prototype/embed; compile Tailwind for production) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:        '#F5F0E5',
+            'cream-deep': '#ECE4D3',
+            panel:        '#FBF8F1',
+            sand:         '#E7DDC9',
+            forest:       '#33502E',
+            'forest-dark':'#263C22',
+            gold:         '#B8934E',
+            'gold-soft':  '#CBB07A',
+            ink:          '#2B3626',
+            body:         '#5E6553',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'ui-serif', 'Georgia', 'serif'],
+            sans:  ['"Work Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background-color: #F5F0E5; }
+    .screen { transition: opacity .35s ease, transform .35s ease; }
+    .screen.is-hidden { display: none; }
+    .screen.is-leaving { opacity: 0; transform: translateY(8px); }
+    .screen.is-entering { opacity: 0; transform: translateY(12px); }
+    .option:focus-visible, .btn:focus-visible, a.btn:focus-visible { outline: 3px solid #B8934E; outline-offset: 3px; }
+    .option[aria-pressed="true"] { border-color: #33502E; background: #EEF2E8; box-shadow: 0 10px 26px -14px rgba(38,60,34,.55); }
+    .spinner { width: 1.15rem; height: 1.15rem; border: 2.5px solid rgba(255,255,255,.45); border-top-color: #fff; border-radius: 9999px; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Hero media: pretty botanical fallback if no photo is present */
+    .hero-media { background:
+        radial-gradient(120% 90% at 20% 15%, #6E8A55 0%, #4B6B3A 45%, #33502E 100%); }
+    @media (prefers-reduced-motion: reduce) {
+      .screen { transition: none; } html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="font-sans text-body antialiased selection:bg-forest/15">
+
+  <!-- ============================================================= -->
+  <!-- CONFIG — the only block you need to edit                      -->
+  <!-- ============================================================= -->
+  <script>
+    const CONFIG = {
+      systeme: {
+        // RECOMMENDED (safe): a webhook URL that receives the lead as JSON.
+        // Build one via a systeme.io Workflow trigger, or Make/Zapier/n8n that
+        // then creates the contact + applies the tag. No API key in the browser.
+        //   Payload: { name, email, bucket, tag, result, answers, submittedAtISO }
+        webhookUrl: '',
+
+        // ADVANCED (NOT recommended client-side): systeme.io Public API.
+        // Exposes the key to every visitor and may fail CORS. Use only via a proxy.
+        apiKey: '',
+        apiBase: 'https://api.systeme.io/api',
+        tagIds: { A: '', B: '', C: '' },
+      },
+      calendlyUrl: 'https://calendly.com/rosie/connection-call',
+      // Masterclass video — YouTube watch link converted to its /embed/ form for the iframe.
+      masterclassEmbedUrl: 'https://www.youtube.com/embed/FfzNZE4Vpog',
+      pdfUrl: '#',               // <-- link to the free PDF Roadmap
+      // Wall of Love — set each embedUrl to a YouTube/Vimeo /embed/ link when ready.
+      // Leave embedUrl '' to show a clean placeholder.
+      testimonials: [
+        { name: 'Eleanor', win: 'Scaled to consistent $10k months without the ick.', embedUrl: '' },
+        { name: 'Patrick', win: 'Filled his 1:1 practice with aligned clients in 60 days.', embedUrl: '' },
+        { name: 'Roshina', win: 'Doubled her close rate with a soul-aligned sales flow.', embedUrl: '' },
+      ],
+      demoMode: true,            // simulate a successful submit until systeme.io is connected
+    };
+  </script>
+
+  <main id="app" class="min-h-screen w-full">
+
+    <!-- ============================== STATE 1: LANDING ============================== -->
+    <section id="screen-hero" class="screen">
+
+      <!-- Nav -->
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <a href="#" class="font-serif text-xl font-600 text-forest">Growth with <span class="italic">Rosie</span></a>
+        <div class="hidden items-center gap-8 text-sm font-500 text-body md:flex">
+          <a href="#pillars" class="transition hover:text-forest">About</a>
+          <a href="#" class="transition hover:text-forest">Masterclasses</a>
+          <a href="#" class="transition hover:text-forest">Services</a>
+          <a href="#cta-band" class="transition hover:text-forest">Contact</a>
+        </div>
+      </nav>
+
+      <!-- Hero (split) -->
+      <div class="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-10 pt-6 md:grid-cols-2 md:gap-14 md:pt-10">
+        <!-- Left: photo -->
+        <div class="hero-media relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] shadow-xl shadow-forest/15 md:aspect-[5/6]">
+          <img src="assets/hero.webp" alt="Rosie, a soul-led business coach, standing in a sunlit garden"
+               class="h-full w-full object-cover"
+               onerror="this.remove()" />
+          <svg class="pointer-events-none absolute -right-6 -top-6 h-32 w-32 text-gold-soft/40" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M10 90 C40 80 60 55 70 20 M70 20 C55 30 45 45 42 60 M70 20 C78 35 80 52 76 68"/></svg>
+        </div>
+
+        <!-- Right: copy + CTA -->
+        <div>
+          <span class="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/50 bg-panel px-4 py-1.5 text-xs font-700 uppercase tracking-[0.16em] text-forest">
+            <span class="h-1.5 w-1.5 rounded-full bg-gold"></span> The Soul-Led Strategy Quiz
+          </span>
+          <h1 class="font-serif text-4xl font-500 leading-[1.08] text-ink sm:text-5xl">
+            Why isn't your soul-led business consistently attracting clients?
+          </h1>
+          <p class="mt-4 font-serif text-xl italic text-forest">
+            (Hint: it's not because you're not talented enough.)
+          </p>
+          <p class="mt-5 max-w-md text-base leading-relaxed text-body">
+            Take this instant <strong class="text-ink">2-minute audit</strong> to uncover the single
+            biggest block holding your growth back right now — and get a tailored strategy to fix it.
+          </p>
+
+          <button type="button" data-start-quiz
+            class="btn group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-7 py-4 text-base font-700 text-cream shadow-lg shadow-forest/25 transition hover:-translate-y-0.5 hover:bg-forest-dark sm:w-auto">
+            Take the Soul-Led Strategy Quiz
+            <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+          </button>
+
+          <!-- Social proof -->
+          <div class="mt-7 flex items-center gap-4">
+            <div class="flex -space-x-3" aria-hidden="true">
+              <span class="grid h-9 w-9 place-items-center rounded-full border-2 border-cream bg-forest/80 text-xs font-700 text-cream">AR</span>
+              <span class="grid h-9 w-9 place-items-center rounded-full border-2 border-cream bg-gold text-xs font-700 text-white">MK</span>
+              <span class="grid h-9 w-9 place-items-center rounded-full border-2 border-cream bg-forest text-xs font-700 text-cream">LS</span>
+            </div>
+            <p class="text-sm text-body">
+              <span class="text-gold" aria-hidden="true">★★★★★</span><br />
+              Join <strong class="text-ink">hundreds of soul-led entrepreneurs</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillars -->
+      <div id="pillars" class="mt-8 bg-cream-deep/60 py-16">
+        <div class="mx-auto max-w-6xl px-6">
+          <p class="text-center font-serif text-2xl font-500 text-ink sm:text-3xl">A soulful strategy, built on four pillars</p>
+          <div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <!-- Clarity -->
+            <div class="rounded-2xl border border-sand bg-panel p-6 text-center shadow-sm">
+              <div class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-forest/10 text-forest">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6 6l1.5 1.5M16.5 16.5 18 18M18 6l-1.5 1.5M7.5 16.5 6 18"/><circle cx="12" cy="12" r="3.2"/></svg>
+              </div>
+              <h3 class="mt-4 font-serif text-lg font-600 text-ink">Clarity</h3>
+              <p class="mt-1 text-sm text-body">Discover your unique path.</p>
+            </div>
+            <!-- Traction -->
+            <div class="rounded-2xl border border-sand bg-panel p-6 text-center shadow-sm">
+              <div class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-forest/10 text-forest">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+              </div>
+              <h3 class="mt-4 font-serif text-lg font-600 text-ink">Traction</h3>
+              <p class="mt-1 text-sm text-body">Attract your ideal audience.</p>
+            </div>
+            <!-- Connection -->
+            <div class="rounded-2xl border border-sand bg-panel p-6 text-center shadow-sm">
+              <div class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-forest/10 text-forest">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+              </div>
+              <h3 class="mt-4 font-serif text-lg font-600 text-ink">Connection</h3>
+              <p class="mt-1 text-sm text-body">Build soulful relationships.</p>
+            </div>
+            <!-- Commitment -->
+            <div class="rounded-2xl border border-sand bg-panel p-6 text-center shadow-sm">
+              <div class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-forest/10 text-forest">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+              </div>
+              <h3 class="mt-4 font-serif text-lg font-600 text-ink">Commitment</h3>
+              <p class="mt-1 text-sm text-body">Cultivate lasting success.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom CTA band -->
+      <div id="cta-band" class="mx-auto max-w-6xl px-6 py-16">
+        <div class="rounded-[2rem] bg-forest px-8 py-12 text-center shadow-xl shadow-forest/20">
+          <h2 class="font-serif text-2xl font-500 text-cream sm:text-3xl">Ready to find your #1 growth block?</h2>
+          <p class="mx-auto mt-3 max-w-md text-cream/80">It takes 2 minutes, and your tailored strategy is waiting on the other side.</p>
+          <button type="button" data-start-quiz
+            class="btn mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-700 text-ink shadow-lg transition hover:-translate-y-0.5 hover:bg-gold-soft">
+            Take the Soul-Led Strategy Quiz →
+          </button>
+        </div>
+      </div>
+
+      <footer class="pb-8 text-center text-xs text-body/60">
+        © <span class="yr"></span> Growth with Rosie — Soul-Led Business Coach
+      </footer>
+    </section>
+
+    <!-- ============================== STATE 2: QUIZ ============================== -->
+    <section id="screen-quiz" class="screen is-hidden mx-auto flex min-h-screen max-w-2xl flex-col justify-center px-6 py-16">
+      <div class="mb-8">
+        <div class="mb-2 flex items-center justify-between text-xs font-700 uppercase tracking-widest text-forest">
+          <span id="progress-label">Question 1 of 3</span>
+          <span id="progress-percent">33%</span>
+        </div>
+        <div class="h-2 w-full overflow-hidden rounded-full bg-sand">
+          <div id="progress-bar" class="h-full rounded-full bg-gradient-to-r from-gold to-forest transition-all duration-500 ease-out" style="width:33%"></div>
+        </div>
+      </div>
+
+      <div id="question-card" class="screen">
+        <h2 id="question-text" class="font-serif text-2xl font-500 leading-snug text-ink sm:text-3xl"></h2>
+        <div id="options" class="mt-7 grid gap-3" role="group" aria-label="Answer options"></div>
+      </div>
+
+      <div class="mt-8 flex items-center justify-between">
+        <button type="button" id="btn-back"
+          class="btn inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-700 text-body transition hover:text-forest disabled:cursor-not-allowed disabled:opacity-0">
+          <span aria-hidden="true">←</span> Back
+        </button>
+        <p class="text-xs text-body/70">Pick the answer that feels most true.</p>
+      </div>
+    </section>
+
+    <!-- ============================== STATE 3: OPT-IN ============================== -->
+    <section id="screen-optin" class="screen is-hidden mx-auto flex min-h-screen max-w-lg flex-col justify-center px-6 py-16">
+      <div class="rounded-[2rem] border border-sand bg-panel p-8 shadow-xl shadow-forest/5 sm:p-10">
+        <div class="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-forest/10 text-forest">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2 class="font-serif text-2xl font-500 leading-snug text-ink sm:text-3xl">Your analysis is ready!</h2>
+        <p class="mt-3 text-base leading-relaxed text-body">
+          Enter your name and email to reveal your result — and get instant access to Rosie's free Masterclass.
+        </p>
+
+        <form id="optin-form" class="mt-7 space-y-4" novalidate>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="lead-name" class="mb-1.5 block text-sm font-600 text-ink">First name</label>
+              <input id="lead-name" name="name" type="text" autocomplete="given-name" required
+                class="w-full rounded-xl border border-sand bg-cream/50 px-4 py-3 text-ink placeholder:text-body/50 focus:border-forest focus:outline-none focus:ring-2 focus:ring-gold/50"
+                placeholder="First Name" />
+            </div>
+            <div>
+              <label for="lead-email" class="mb-1.5 block text-sm font-600 text-ink">Email</label>
+              <input id="lead-email" name="email" type="email" autocomplete="email" required
+                class="w-full rounded-xl border border-sand bg-cream/50 px-4 py-3 text-ink placeholder:text-body/50 focus:border-forest focus:outline-none focus:ring-2 focus:ring-gold/50"
+                placeholder="Email" />
+            </div>
+          </div>
+
+          <!-- Honeypot -->
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label>Leave empty <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <p id="form-error" class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm font-600 text-red-700" role="alert"></p>
+
+          <button type="submit" id="btn-submit"
+            class="btn flex w-full items-center justify-center gap-2 rounded-xl bg-forest px-6 py-4 text-base font-700 text-cream shadow-lg shadow-forest/25 transition hover:bg-forest-dark disabled:cursor-wait disabled:opacity-80">
+            <span id="btn-submit-label">Yes! Show My Results &amp; Masterclass</span>
+          </button>
+          <p class="text-center text-xs text-body/70">We respect your inbox. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================== STATE 4: RESULT ============================== -->
+    <section id="screen-result" class="screen is-hidden mx-auto flex min-h-screen max-w-2xl flex-col justify-center px-6 py-16">
+      <span class="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-forest/10 px-4 py-1.5 text-xs font-700 uppercase tracking-[0.16em] text-forest">
+        Your Result
+      </span>
+      <h2 class="font-serif text-3xl font-500 leading-tight text-ink sm:text-4xl">
+        Your biggest block is: <span id="result-name" class="text-forest"></span>
+      </h2>
+      <p id="result-lead" class="mt-4 font-serif text-lg italic text-forest"></p>
+      <p id="result-body" class="mt-4 text-base leading-relaxed text-body"></p>
+
+      <!-- Dynamic solution bridge -->
+      <p id="result-solution" class="mt-6 rounded-2xl border border-gold/40 bg-panel px-5 py-4 text-base font-600 text-ink"></p>
+
+      <div class="mt-8">
+        <p class="mb-3 text-sm font-700 uppercase tracking-widest text-forest">Watch your free Masterclass</p>
+        <!-- Responsive 16:9 video wrapper; iframe injected by renderResult() -->
+        <div id="masterclass" class="relative aspect-video w-full overflow-hidden rounded-2xl border border-sand bg-forest-dark shadow-xl">
+          <div class="absolute inset-0 grid place-items-center bg-gradient-to-br from-forest to-forest-dark text-center">
+            <div>
+              <div class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-cream/15 backdrop-blur">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#F5F0E5" class="ml-1 h-7 w-7" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <p class="mt-3 text-sm font-500 text-cream/80">Loading your Masterclass…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary massive CTA -->
+      <a id="cta-calendly" href="#" target="_blank" rel="noopener noreferrer"
+        class="btn group mt-10 flex w-full items-center justify-center gap-3 rounded-2xl bg-forest px-8 py-6 text-center text-lg font-700 text-cream shadow-2xl shadow-forest/30 transition hover:-translate-y-1 hover:bg-forest-dark sm:text-xl">
+        Schedule a Connection Call with Rosie
+        <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+      </a>
+
+      <!-- Secondary PDF link -->
+      <p class="mt-5 text-center text-sm text-body">
+        Not ready for a call?
+        <a id="cta-pdf" href="#" target="_blank" rel="noopener noreferrer"
+           class="font-600 text-forest underline decoration-gold/60 decoration-2 underline-offset-4 transition hover:text-forest-dark">
+          Download the free PDF Roadmap here.
+        </a>
+      </p>
+
+      <!-- Wall of Love / Client Wins -->
+      <section class="mt-14 border-t border-sand pt-12">
+        <h3 class="text-center font-serif text-2xl font-500 leading-snug text-ink sm:text-3xl">
+          Join other soul-led clients who’ve broken through their blocks
+        </h3>
+        <div id="testimonials-grid" class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3"></div>
+      </section>
+
+      <!-- Final duplicate CTA (absolute bottom) -->
+      <a id="cta-calendly-2" href="#" target="_blank" rel="noopener noreferrer"
+        class="btn group mt-12 flex w-full items-center justify-center gap-3 rounded-2xl bg-forest px-8 py-6 text-center text-lg font-700 text-cream shadow-2xl shadow-forest/30 transition hover:-translate-y-1 hover:bg-forest-dark sm:text-xl">
+        Schedule Your Connection Call Now
+        <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+      </a>
+
+      <button type="button" data-restart class="mx-auto mt-6 block text-sm font-600 text-body underline-offset-4 hover:text-forest hover:underline">
+        Retake the audit
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- APP LOGIC                                                     -->
+  <!-- ============================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    const QUIZ = [
+      {
+        q: 'What stresses you out most in your business right now?',
+        options: [
+          { bucket: 'A', text: 'I have so many ideas, but I’m confused about how to package them into one clear offer.' },
+          { bucket: 'B', text: 'My content falls flat — it feels like talking to an empty room.' },
+          { bucket: 'C', text: 'Plenty of people DM me, but the moment I mention price, they disappear.' },
+        ],
+      },
+      {
+        q: 'When you picture your next big breakthrough, what’s the missing piece?',
+        options: [
+          { bucket: 'A', text: 'Finally naming exactly who I serve and the transformation I offer.' },
+          { bucket: 'B', text: 'Getting seen by the right people, consistently.' },
+          { bucket: 'C', text: 'Confidently guiding a conversation into a paid “yes”.' },
+        ],
+      },
+      {
+        q: 'How do you feel about your current sales process?',
+        options: [
+          { bucket: 'A', text: 'What process? My offer still feels blurry — even to me.' },
+          { bucket: 'B', text: 'I’d happily sell if enough of the right people knew I existed.' },
+          { bucket: 'C', text: 'I get discovery calls, but they rarely turn into clients.' },
+        ],
+      },
+    ];
+
+    const RESULTS = {
+      A: {
+        tag: 'quiz-result-clarity',
+        name: 'Clarity',
+        title: 'Your #1 Growth Block: Clarity',
+        lead: 'Your gifts are real — they’re just wrapped in too many ideas at once.',
+        body: 'Right now, potential clients can’t instantly grasp what you do or why it’s for them, so they scroll past. This isn’t a talent problem; it’s a packaging problem. Once you distill your message into one irresistible, crystal-clear offer, everything downstream — your content, your sales conversations, your pricing — gets dramatically easier. Your free Masterclass shows you exactly how to find that clarity.',
+      },
+      B: {
+        tag: 'quiz-result-visibility',
+        name: 'Visibility',
+        title: 'Your #1 Growth Block: Visibility',
+        lead: 'Your offer is solid — not enough of the right people are seeing it yet.',
+        body: 'You’re currently the best-kept secret in your niche. The fix isn’t hustling harder or posting more randomly — it’s a simple, repeatable visibility rhythm that puts your message in front of aligned clients consistently. In your free Masterclass, Rosie walks you through the soul-aligned visibility system that grows an audience of buyers, not just followers.',
+      },
+      C: {
+        tag: 'quiz-result-conversion',
+        name: 'Conversion',
+        title: 'Your #1 Growth Block: Conversion',
+        lead: 'You’re attracting attention — but the bridge from “interested” to “client” is leaking.',
+        body: 'You’re starting conversations and getting discovery calls, yet too few turn into paid clients. This is almost never about lowering your prices — it’s about sales confidence and a soul-aligned enrollment process that feels good for both of you. Your free Masterclass reveals the exact conversation framework that turns aligned prospects into committed clients.',
+      },
+    };
+
+    const state = { current: 0, answers: [] };
+
+    const screens = {
+      hero:   document.getElementById('screen-hero'),
+      quiz:   document.getElementById('screen-quiz'),
+      optin:  document.getElementById('screen-optin'),
+      result: document.getElementById('screen-result'),
+    };
+
+    let activeScreen = 'hero';
+    function showScreen(name) {
+      const from = screens[activeScreen];
+      const to = screens[name];
+      if (from === to) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      from.classList.add('is-leaving');
+      setTimeout(function () {
+        from.classList.add('is-hidden');
+        from.classList.remove('is-leaving');
+        to.classList.remove('is-hidden');
+        to.classList.add('is-entering');
+        void to.offsetWidth;
+        to.classList.remove('is-entering');
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        activeScreen = name;
+      }, reduce ? 0 : 320);
+    }
+
+    const qText = document.getElementById('question-text');
+    const optionsEl = document.getElementById('options');
+    const card = document.getElementById('question-card');
+    const bar = document.getElementById('progress-bar');
+    const progressLabel = document.getElementById('progress-label');
+    const progressPercent = document.getElementById('progress-percent');
+    const btnBack = document.getElementById('btn-back');
+
+    function updateProgress() {
+      const pct = Math.round(((state.current + 1) / QUIZ.length) * 100);
+      bar.style.width = pct + '%';
+      progressLabel.textContent = 'Question ' + (state.current + 1) + ' of ' + QUIZ.length;
+      progressPercent.textContent = pct + '%';
+      btnBack.disabled = state.current === 0;
+    }
+
+    function renderQuestion(animate) {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const paint = function () {
+        const item = QUIZ[state.current];
+        qText.textContent = item.q;
+        optionsEl.innerHTML = '';
+        item.options.forEach(function (opt, idx) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'option flex w-full items-center gap-3 rounded-2xl border-2 border-sand bg-panel px-5 py-4 text-left text-base font-500 text-ink transition hover:border-gold hover:bg-white';
+          btn.setAttribute('aria-pressed', state.answers[state.current] === opt.bucket ? 'true' : 'false');
+          const marker = document.createElement('span');
+          marker.className = 'grid h-7 w-7 shrink-0 place-items-center rounded-full border-2 border-sand text-sm font-700 text-forest';
+          marker.textContent = String.fromCharCode(65 + idx);
+          const label = document.createElement('span');
+          label.textContent = opt.text;
+          btn.appendChild(marker);
+          btn.appendChild(label);
+          btn.addEventListener('click', function () { selectOption(opt.bucket); });
+          optionsEl.appendChild(btn);
+        });
+        updateProgress();
+        if (animate && !reduce) { card.classList.add('is-entering'); void card.offsetWidth; card.classList.remove('is-entering'); }
+      };
+      if (animate && !reduce) {
+        card.classList.add('is-leaving');
+        setTimeout(function () { card.classList.remove('is-leaving'); paint(); }, 260);
+      } else { paint(); }
+    }
+
+    function selectOption(bucket) {
+      state.answers[state.current] = bucket;
+      Array.prototype.forEach.call(optionsEl.children, function (c) { c.setAttribute('aria-pressed', 'false'); });
+      const item = QUIZ[state.current];
+      const idx = item.options.findIndex(function (o) { return o.bucket === bucket; });
+      if (optionsEl.children[idx]) optionsEl.children[idx].setAttribute('aria-pressed', 'true');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(function () {
+        if (state.current < QUIZ.length - 1) { state.current++; renderQuestion(true); }
+        else { showScreen('optin'); }
+      }, reduce ? 0 : 420);
+    }
+
+    btnBack.addEventListener('click', function () {
+      if (state.current > 0) { state.current--; renderQuestion(true); }
+    });
+
+    function computeBucket() {
+      const tally = { A: 0, B: 0, C: 0 };
+      state.answers.forEach(function (b) { if (tally[b] !== undefined) tally[b]++; });
+      const max = Math.max(tally.A, tally.B, tally.C);
+      const winners = ['A', 'B', 'C'].filter(function (k) { return tally[k] === max; });
+      return winners.length === 1 ? winners[0] : 'B'; // tie -> Visibility (B)
+    }
+
+    function renderResult(bucket) {
+      const r = RESULTS[bucket];
+      document.getElementById('result-name').textContent = r.name;
+      document.getElementById('result-lead').textContent = r.lead;
+      document.getElementById('result-body').textContent = r.body;
+      // Dynamic bridge: tie the Masterclass directly to their specific block
+      document.getElementById('result-solution').textContent =
+        'Good news: the free Masterclass below is the exact solution for your ' + r.name +
+        ' block — watch it before your call with Rosie.';
+      document.getElementById('cta-calendly').href = CONFIG.calendlyUrl || '#';
+      document.getElementById('cta-calendly-2').href = CONFIG.calendlyUrl || '#';
+      document.getElementById('cta-pdf').href = CONFIG.pdfUrl || '#';
+      if (CONFIG.masterclassEmbedUrl) {
+        document.getElementById('masterclass').innerHTML =
+          '<iframe class="absolute inset-0 h-full w-full" src="' + CONFIG.masterclassEmbedUrl +
+          '" title="Rosie\'s Masterclass" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+      }
+      showScreen('result');
+    }
+
+    async function sendToSysteme(payload) {
+      if (CONFIG.systeme.webhookUrl) {
+        const res = await fetch(CONFIG.systeme.webhookUrl, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Webhook responded ' + res.status);
+        return;
+      }
+      if (CONFIG.systeme.apiKey) {
+        const base = CONFIG.systeme.apiBase;
+        const headers = { 'Content-Type': 'application/json', 'X-API-Key': CONFIG.systeme.apiKey };
+        const cRes = await fetch(base + '/contacts', {
+          method: 'POST', headers: headers,
+          body: JSON.stringify({ email: payload.email, fields: [{ slug: 'first_name', value: payload.name }] }),
+        });
+        if (!cRes.ok && cRes.status !== 422) throw new Error('Contact create failed ' + cRes.status);
+        const contact = await cRes.json().catch(function () { return {}; });
+        const tagId = CONFIG.systeme.tagIds[payload.bucket];
+        if (contact && contact.id && tagId) {
+          await fetch(base + '/contacts/' + contact.id + '/tags', {
+            method: 'POST', headers: headers, body: JSON.stringify({ tagId: Number(tagId) }),
+          });
+        }
+        return;
+      }
+      if (CONFIG.demoMode) {
+        console.log('[DEMO MODE] Lead captured (not sent anywhere):', payload);
+        await new Promise(function (r) { setTimeout(r, 900); });
+        return;
+      }
+      throw new Error('No systeme.io destination configured.');
+    }
+
+    const form = document.getElementById('optin-form');
+    const btnSubmit = document.getElementById('btn-submit');
+    const btnLabel = document.getElementById('btn-submit-label');
+    const errorEl = document.getElementById('form-error');
+
+    function showError(msg) { errorEl.textContent = msg; errorEl.classList.remove('hidden'); }
+    function setLoading(on) {
+      btnSubmit.disabled = on;
+      if (on) {
+        btnLabel.textContent = 'Sending…';
+        const s = document.createElement('span'); s.className = 'spinner'; s.id = 'submit-spinner';
+        btnSubmit.insertBefore(s, btnLabel);
+      } else {
+        const s = document.getElementById('submit-spinner'); if (s) s.remove();
+        btnLabel.textContent = 'Yes! Show My Results & Masterclass';
+      }
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errorEl.classList.add('hidden');
+      if (form.company && form.company.value) return; // honeypot
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!name) { showError('Please enter your first name.'); form.name.focus(); return; }
+      if (!emailOk) { showError('Please enter a valid email address.'); form.email.focus(); return; }
+
+      const bucket = computeBucket();
+      const payload = {
+        name: name, email: email, bucket: bucket, tag: RESULTS[bucket].tag,
+        result: RESULTS[bucket].title, answers: state.answers.slice(),
+        submittedAtISO: new Date().toISOString(),
+      };
+      setLoading(true);
+      try { await sendToSysteme(payload); renderResult(bucket); }
+      catch (err) { console.error(err); showError('Something went wrong sending your details. Please try again in a moment.'); }
+      finally { setLoading(false); }
+    });
+
+    document.querySelectorAll('[data-start-quiz]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        state.current = 0; state.answers = [];
+        renderQuestion(false); showScreen('quiz');
+      });
+    });
+    document.querySelectorAll('[data-restart]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        state.current = 0; state.answers = []; form.reset();
+        renderQuestion(false); showScreen('hero');
+      });
+    });
+
+    // Wall of Love — render testimonial cards (iframe if embedUrl set, else clean placeholder)
+    function renderTestimonials() {
+      const grid = document.getElementById('testimonials-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      (CONFIG.testimonials || []).forEach(function (t) {
+        const media = t.embedUrl
+          ? '<iframe class="absolute inset-0 h-full w-full" src="' + t.embedUrl + '" title="' + t.name +
+            ' testimonial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+          : '<div class="absolute inset-0 grid place-items-center bg-gradient-to-br from-forest to-forest-dark text-center">' +
+              '<div>' +
+                '<div class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-cream/15 backdrop-blur">' +
+                  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#F5F0E5" class="ml-0.5 h-6 w-6" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>' +
+                '</div>' +
+                '<p class="mt-2 text-xs font-500 text-cream/80">' + t.name + '’s story</p>' +
+              '</div>' +
+            '</div>';
+        const card = document.createElement('div');
+        card.innerHTML =
+          '<div class="relative aspect-video w-full overflow-hidden rounded-2xl border border-sand bg-forest-dark shadow-md">' + media + '</div>' +
+          '<p class="mt-3 text-sm leading-relaxed text-body"><span class="font-700 text-ink">' + t.name + ':</span> ' + t.win + '</p>';
+        grid.appendChild(card);
+      });
+    }
+
+    // Guard placeholder links: while href is still '#', don't navigate/open a blank tab.
+    ['cta-pdf', 'cta-calendly', 'cta-calendly-2'].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('click', function (e) {
+        const href = el.getAttribute('href');
+        if (!href || href === '#') {
+          e.preventDefault();
+          console.warn('[CONFIG] This link is still a placeholder. Set CONFIG.' + (id === 'cta-pdf' ? 'pdfUrl' : 'calendlyUrl') + ' to a real URL.');
+        }
+      });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.yr'), function (el) { el.textContent = String(new Date().getFullYear()); });
+    renderTestimonials();
+    renderQuestion(false);
+  })();
+  </script>
+</body>
+</html>
